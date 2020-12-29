@@ -112,6 +112,7 @@ class SubtractionRefpad(Function):
         # outputはsubtraction_refpad_forward_kernelからの計算結果を保存するtensor
         # outputのshapeは、bs x in_channel x 9 x output_height x output_widthとなる
         # 9となる理由は、あるピクセルから見たときの周囲ピクセル9個を関係を計算する対象とするため
+        # つまりkernel_size = (3, 3)となっている
         output = input.new(batch_size, input_channels, kernel_size[0] * kernel_size[1], output_height * output_width)
         n = output.numel() // output.shape[2]
         with torch.cuda.device_of(input):

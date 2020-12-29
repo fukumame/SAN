@@ -1,3 +1,8 @@
+# このレポジトリについて
+このレポジトリは、オリジナルのExploring Self-attention for Image Recognitionのコードに、日本語での解説コメントを入れたものです。  
+主に、[こちら](./model/san.py)のコードに解説用のコメントを入れています。  
+このコードは、CUDAの実行環境がないと動かないので、動作させたい場合は、CUDAのある環境で動かすようにしてください。
+
 # Exploring Self-attention for Image Recognition
 by Hengshuang Zhao, Jiaya Jia, and Vladlen Koltun, details are in [paper](https://hszhao.github.io/papers/cvpr20_san.pdf).
 
