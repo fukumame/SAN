@@ -75,7 +75,7 @@ class SAM(nn.Module):
             # 相対座標位置を学習可能な畳み込み演算に通す
             pos_data = self.conv_p(pos_data) # pos_data: 1 x 2 x H x W
 
-            # あるピクセル(p1)を中心とした、自分自身を含む9つのピクセル(P2)との相対位置(p2 -p1)を計算
+            # あるピクセル(p1)を中心とした、自分自身を含む9つのピクセル(P2)との相対位置(p2 - p1)を計算
             # これを全ピクセル分行うため、最後の軸の次元は、H*Wとなる。
             # 例えば、H:112、W:112の場合、112*112 = 12544となる。
             pos_data = self.subtraction(pos_data)  # pos_data: 1 x 2 x 9 x (H*W)
@@ -95,7 +95,7 @@ class SAM(nn.Module):
             # これは論文中の Eq3におけるγ関数を表す
             embedded_attention = self.conv_w(position_wised_attention) # w: bs x C' x 9 x (H*W)
 
-            # 9つの周囲ピクセルの共起関係の値が合計で1になるよう、確率値で表す(いわゆるnormalized処理のようなもの)
+            # 9つの周囲ピクセルの共起関係の値が合計で1になるよう、確率値で表す(いわゆるnormalize処理のようなもの)
             normalized_attention = self.softmax(embedded_attention) # w: bs x C' x 9 x (H*W)
         else:  # パッチごとのSelf-Attentionの処理
             if self.stride != 1:
