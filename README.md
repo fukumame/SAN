@@ -1,7 +1,17 @@
 # このレポジトリについて
-このレポジトリは、オリジナルのExploring Self-attention for Image Recognitionのコードに、日本語での解説コメントを入れたものです。  
-主に、[こちら](./model/san.py)のコードに解説用のコメントを入れています。  
-このコードは、CUDAの実行環境がないと動かないので、動作させたい場合は、CUDAのある環境で動かすようにしてください。
+- このレポジトリは、オリジナルの [Exploring Self-attention for Image Recognition](https://hszhao.github.io/papers/cvpr20_san.pdf) の実装コードに、日本語での解説コメントを入れたものです。  
+- 主に、[こちら](./model/san.py)のコードに解説用のコメントを入れています。
+- 上記ファイルは、`python3 -m model.san` でテスト実行できるので、デバッガでステップ実行しつつ、このコメントを見ながら、テンソルの変化を追っていくと理解が進むと思います。
+- 日本語での論文解説記事は [オミータ](https://twitter.com/omiita_atiimo) 氏の、 [こちらの記事](https://qiita.com/omiita/items/f4fad6371747e718310e) が分かりやすいです。
+- なお、当コードは、CUDAの実行環境がないと動かないので、動作させたい場合は、CUDAのある環境で動かすようにしてください。
+
+## インストール方法
+- [poetry](https://org-technology.com/posts/python-poetry.html) で、必要なpipファイルのインストールが可能になっています  
+- poetryのインストールがまだされていない場合、下記のコマンドでインストール可能です。
+    ```shell
+    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+    ```
+- poetryがインストールされている場合、`poetry install` コマンドで必要なpipファイルのインストールが可能です
 
 # Exploring Self-attention for Image Recognition
 by Hengshuang Zhao, Jiaya Jia, and Vladlen Koltun, details are in [paper](https://hszhao.github.io/papers/cvpr20_san.pdf).
