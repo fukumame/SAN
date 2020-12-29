@@ -125,16 +125,19 @@ class SAM(nn.Module):
             attention = torch.cat([x1, x2], 1) # attention: bs x (C*9 + c), 1, (H*W)
 
             # この処理は、論文中のEq5におけるγを表している.
-            # すなわち、x3（β(x_j)）との要素積をしやすくするための次元の調整処理
+            # あるピクセルとその周辺ピクセルの特徴ベクトルを重み付きの内積で表し、関係性により豊かな情報を持たせると共に、
+            # x3（β(x_j)）との要素積をしやすくするための次元の調整処理
             normalized_attention = self.conv_w(attention)  # normalized_attention: bs x (C'*9), 1, (H*W)
             normalized_attention = normalized_attention.view(x.shape[0], -1, pow(self.kernel_size, 2), x1.shape[-1]) # normalized_attention: bs x C' x 9 x (H*W)
 
         # 論文中のfig1におけるAggregationの処理
-        # あるピクセル(i)における、9つ周囲ピクセル(j)におけるAttention値（α）と、各ピクセルにおける特徴量(β(x_j))のそれぞれの要素積を取って、足し合わせる計算を行い、これをiの特徴量y_iとする
+        # あるピクセル(i)における、9つ周囲ピクセル(j)におけるAttention値（α）と、各ピクセルにおける特徴量(β(x_j))のそれぞれの要素積を取って、
+        # 足し合わせる計算を行い、これをiの特徴量y_iとする
         # この処理を全ピクセル分実施する
         # なお、論文中にも記載されているが、attentionの次元とx3(=β(x_j))のChannel方向の次元は必ずしも一致していなくても良い。
         # なぜなら、x3と特徴マップをattentionの次元数に合わせてグループ化し、そのグループ化された特徴マップ単位で、attentionとのアダマール積を計算するため
-        # 実際、attentionのチャンネル方向の次元数は例えば2になるが、x3の特徴マップが16だった場合、これを16/2=8のグループに分け、それぞれのグループに対して、アダマール積を計算する
+        # 実際、attentionのチャンネル方向の次元数は例えば2になるが、x3の特徴マップが16だった場合、
+        # これを16/2=8のグループに分け、それぞれのグループに対して、アダマール積を計算する
         x = self.aggregation(x3, normalized_attention) # x: bs x (x3のChannel数) x H x W (x3と階数、次元ともに同じ)
 
         return x
